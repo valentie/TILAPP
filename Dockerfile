@@ -1,7 +1,7 @@
 FROM swift:5.1.1 as builder
 
 RUN apt-get -qq update && apt-get -q -y install \
-  tzdata \
+  libssl-dev zlib1g-dev tzdata \
   && rm -r /var/lib/apt/lists/*
 
 # Set the working directory to /app
@@ -21,10 +21,10 @@ RUN swift build -c release && mv `swift build -c release --show-bin-path` /build
 #
 
 # Start with the official Ubuntu image
-FROM ubuntu:18.04
+FROM ubuntu:latest
 
 RUN apt-get -qq update && apt-get install -y \
-  libicu55 libxml2 libbsd0 libcurl3 libatomic1 \
+  libicu60 libxml2 libbsd0 libcurl4 libatomic1 libz-dev \
   tzdata \
   && rm -r /var/lib/apt/lists/*
 
